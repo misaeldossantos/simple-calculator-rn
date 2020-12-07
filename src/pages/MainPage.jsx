@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import AnimatedWaves from '../molecules/AnimatedWaves';
 import NumberPad from '../organisms/NumberPad';
 import Visor from '../organisms/Visor';
 

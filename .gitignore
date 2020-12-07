@@ -14,4 +14,5 @@ web-build/
 
 *.expo*
 .expo-shared/*
+.vscode/*
 yarn.lock
