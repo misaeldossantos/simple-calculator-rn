@@ -13,4 +13,5 @@ web-build/
 .DS_Store
 
 *.expo*
+.expo-shared/*
 yarn.lock
