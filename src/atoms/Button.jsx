@@ -1,14 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { View, Animated, Text, StyleSheet } from 'react-native';
+import chroma from 'chroma-js';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
-import chroma from 'chroma-js'
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
-
-const { } = Animated
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 
-const Button = ({ color = "grey", rippleColor = "#B4A4E7", children }) => {
+const Button = ({ as, onPress, color = "grey", rippleColor = "#B4A4E7", children }) => {
 
     const [focus, setFocus] = useState(false)
 
@@ -17,23 +14,35 @@ const Button = ({ color = "grey", rippleColor = "#B4A4E7", children }) => {
     const colors = useMemo(() => {
         const chromaColor = chroma(rippleColor)
         return {
-            circle1: chromaColor.alpha(0.07).css(),
-            circle2: chromaColor.alpha(0.05).css(),
-            circle3: chromaColor.alpha(0.04).css(),
+            circle1: chromaColor.alpha(0.08).css(),
+            circle2: chromaColor.alpha(0.06).css(),
+            circle3: chromaColor.alpha(0.05).css(),
             circle4: "white",
         }
     }, [rippleColor])
 
+    const pressAction = useCallback(() => {
+        setFocus(true)
+        Animated.timing(animatedValue, {
+            useNativeDriver: true,
+            duration: 500,
+            toValue: 1,
+        }).start(() => {
+            setFocus(false)
+        })
+        onPress && onPress(as)
+    }, [animatedValue, onPress])
+
     const size = 100
 
-    return <View style={{
+    return <TouchableOpacity style={{
         position: 'relative',
         flexDirection: 'row',
         height: size,
         width: size,
         alignItems: 'center',
         justifyContent: 'center'
-    }}>
+    }} delayPressIn={0} onPress={pressAction}>
         {focus && <View style={[StyleSheet.absoluteFill, { flexDirection: 'row', justifyContent: 'center' }]}>
             <Svg height={size} width={size}>
                 <Ripple color={colors.circle1} r={40} animatedValue={animatedValue} />
@@ -43,21 +52,11 @@ const Button = ({ color = "grey", rippleColor = "#B4A4E7", children }) => {
             </Svg>
         </View>}
 
-        <TouchableWithoutFeedback onPress={() => {
-            setFocus(true)
-            Animated.timing(animatedValue, {
-                useNativeDriver: true,
-                duration: 500,
-                toValue: 1,
-            }).start(() => {
-                setFocus(false)
-            })
-        }}>
-            <Text style={{ fontFamily: 'quicksand-light', textAlign: 'center', fontSize: 40, color: color }}>
-                {children}
-            </Text>
-        </TouchableWithoutFeedback>
-    </View>;
+
+        {typeof children === 'string' ? <Text style={{ fontFamily: 'quicksand-regular', textAlign: 'center', fontSize: 40, color: color }}>
+            {children}
+        </Text> : children}
+    </TouchableOpacity>
 }
 
 function Ripple({ color, r, r2, animatedValue, opacity }) {

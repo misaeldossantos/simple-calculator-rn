@@ -2,11 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MainPage from './src/pages/MainPage';
-import { useFonts, Quicksand_300Light } from '@expo-google-fonts/quicksand';
+import { useFonts, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    'quicksand-light': Quicksand_300Light,
+    'quicksand-regular': Quicksand_400Regular,
   });
 
   if (!fontsLoaded) {

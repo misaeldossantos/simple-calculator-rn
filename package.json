@@ -17,6 +17,8 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
     "react-native-easy-grid": "^0.2.2",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-paper": "^4.4.1",
+    "react-native-pose": "^0.9.1",
     "react-native-reanimated": "~1.13.0",
     "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12"
