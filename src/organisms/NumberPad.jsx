@@ -17,15 +17,15 @@ const NumberPad = ({ press }) => {
       <Button onPress={press} color={operationButtonColor}>x</Button>
     </Row>
     <Row>
-      <Button>4</Button>
-      <Button>5</Button>
-      <Button>6</Button>
+      <Button as={4} onPress={press}>4</Button>
+      <Button as={5} onPress={press}>5</Button>
+      <Button as={6} onPress={press}>6</Button>
       <Button color={operationButtonColor}>-</Button>
     </Row>
     <Row>
-      <Button>1</Button>
-      <Button>2</Button>
-      <Button>3</Button>
+      <Button as={1} onPress={press}>1</Button>
+      <Button as={2} onPress={press}>2</Button>
+      <Button as={3} onPress={press}>3</Button>
       <Button color={operationButtonColor}>+</Button>
     </Row>
     <Row>

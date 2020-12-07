@@ -8,12 +8,11 @@ const DISPLAY_WIDTH = Dimensions.get("window").width
 const AnimatedWaves = ({ height }) => {
     return <Wave
         H={height}
-        waveParams={[
-            { A: 10, T: DISPLAY_WIDTH, fill: 'white' },
-        ]}
+        A={10}
+        T={DISPLAY_WIDTH}
+        fill={"white"}
         animated
-        speed={2000}
-        speedIncreasePerWave={600}
+        speed={1000}
     />;
 }
 
