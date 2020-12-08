@@ -14,14 +14,14 @@ const Button = ({ as, onPress, color = "grey", rippleColor = "#B4A4E7", children
     const colors = useMemo(() => {
         const chromaColor = chroma(rippleColor)
         return {
-            circle1: chromaColor.alpha(0.08).css(),
+            circle1: chromaColor.alpha(0.09).css(),
             circle2: chromaColor.alpha(0.06).css(),
             circle3: chromaColor.alpha(0.05).css(),
             circle4: "white",
         }
     }, [rippleColor])
 
-    const pressAction = useCallback(() => {
+    function startAnimation() {
         setFocus(true)
         Animated.timing(animatedValue, {
             useNativeDriver: true,
@@ -30,19 +30,27 @@ const Button = ({ as, onPress, color = "grey", rippleColor = "#B4A4E7", children
         }).start(() => {
             setFocus(false)
         })
+    }
+
+    const pressAction = useCallback(() => {
+        startAnimation()
         onPress && onPress(as)
     }, [animatedValue, onPress])
 
     const size = 100
 
-    return <TouchableOpacity style={{
-        position: 'relative',
-        flexDirection: 'row',
-        height: size,
-        width: size,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }} delayPressIn={0} onPress={pressAction}>
+    return <TouchableOpacity
+        style={{
+            position: 'relative',
+            flexDirection: 'row',
+            height: size,
+            width: size,
+            alignItems: 'center',
+            justifyContent: 'center'
+        }}
+        delayPressIn={0}
+        onPress={pressAction}
+    >
         {focus && <View style={[StyleSheet.absoluteFill, { flexDirection: 'row', justifyContent: 'center' }]}>
             <Svg height={size} width={size}>
                 <Ripple color={colors.circle1} r={40} animatedValue={animatedValue} />

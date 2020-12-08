@@ -1,21 +1,37 @@
+import { Observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { View } from 'react-native';
+import useCalculator from '../core/hooks/useCalculator';
+import { Operators, SpecialButtons } from '../core/model/Enums';
 import NumberPad from '../organisms/NumberPad';
 import Visor from '../organisms/Visor';
 
 const MainPage = () => {
-  const [chars, setChars] = useState([])
+  const calculator = useCalculator();
 
-  function press(button) {
-    if(button == 'BACKSPACE') {
-      setChars(chars.slice(0, chars.length - 1))
+  function press(key) {
+    if (Operators[key]) {
+      calculator.tapOperator(key)
+    } else if (SpecialButtons[key]) {
+      switch (key) {
+        case SpecialButtons.BACKSPACE:
+          calculator.tapBackspace()
+          break
+        case SpecialButtons.C:
+          calculator.reset()
+      }
     } else {
-      setChars([...chars, button])
+      calculator.tapNumber(key)
     }
   }
 
-  return <View style={{flex: 1}}>
-    <Visor chars={chars} />
+  return <View style={{ flex: 1 }}>
+    <Observer>
+      {() => <Visor
+        numberInVisor={calculator.numberInVisor}
+        sequence={calculator.sequence}
+      />}
+    </Observer>
     <NumberPad press={press} />
   </View>;
 }

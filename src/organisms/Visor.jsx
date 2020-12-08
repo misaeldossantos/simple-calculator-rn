@@ -1,61 +1,47 @@
 import chroma from 'chroma-js';
-import React, { useEffect, useMemo } from 'react';
-import { Dimensions, Text, View, StyleSheet } from 'react-native';
+import { Observer } from 'mobx-react';
+import React, { useMemo } from 'react';
+import { Dimensions, View, StyleSheet, Text, ScrollView } from 'react-native';
 import { Colors } from 'react-native-paper';
-import Animated, { Easing, timing, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
+import VisorCurrentNumber from '../atoms/VisorCurrentNumber';
+import { MapOperatorsLabels, TypeSequence } from '../core/model/Enums';
 import AnimatedWaves from '../molecules/AnimatedWaves';
 
 const DISPLAY_HEIGHT = Dimensions.get("screen").height
-const DISPLAY_WIDTH = Dimensions.get("screen").width
 
-const Visor = ({ chars }) => {
+const Visor = ({ sequence, numberInVisor = "" }) => {
 
   const wavesHeight = 20
 
   return <View style={styles.container}>
-    <View style={{
-      marginBottom: wavesHeight,
-      justifyContent: 'flex-end',
-      flexDirection: 'row',
-      marginHorizontal: 20
-    }}>
-      {chars.map((char, index) => <AnimatedNumber
-        char={char}
-        index={index}
-        length={chars.length}
-        key={char + "-" + index}
-      />)}
+    <View
+      style={{
+        marginBottom: wavesHeight,
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        marginHorizontal: 30
+      }}
+    >
+      <Observer>
+        {() => <>
+          {sequence.map((sequence, index) => {
+            const isOperator = sequence.type === TypeSequence.OPERATOR
+            return <Text key={index} style={{
+              fontSize: 30,
+              color: isOperator ? "#B4A4E7" : Colors.grey400
+            }}>
+              {isOperator ? MapOperatorsLabels[sequence.value] : sequence.value}{" "}
+            </Text>
+          })}
+        </>
+        }
+      </Observer>
+      <VisorCurrentNumber numberInVisor={numberInVisor} />
     </View>
     <AnimatedWaves height={wavesHeight} />
   </View>;
 }
 
-function AnimatedNumber({ index, length, char }) {
-  const transform = useSharedValue(DISPLAY_WIDTH)
-
-  useEffect(() => {
-    transform.value = withTiming(-(((length - 1) - index) * 50), {
-      duration: 500,
-      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-    })
-  }, [length, index])
-
-  const translationStyle = useAnimatedStyle(() => {
-    return { transform: [{ translateX: transform.value }] }
-  })
-
-  return <Animated.Text
-    key={char}
-    style={[{
-      fontSize: 100, color: Colors.grey, fontFamily: 'quicksand-regular',
-      position: 'absolute',
-      right: 0,
-      bottom: 0
-    }, translationStyle]}
-  >
-    {char}
-  </Animated.Text>
-}
 
 const color = chroma("#B4A4E7").alpha(0.1).css()
 
