@@ -1,5 +1,5 @@
 import { Observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import useCalculator from '../core/hooks/useCalculator';
 import { Operators, SpecialButtons } from '../core/model/Enums';
@@ -32,7 +32,10 @@ const MainPage = () => {
         sequence={calculator.sequence}
       />}
     </Observer>
-    <NumberPad press={press} />
+    <NumberPad
+      press={press}
+      calculate={() => calculator.calculate()}
+    />
   </View>;
 }
 

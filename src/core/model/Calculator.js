@@ -1,9 +1,10 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import { TypeSequence } from "./Enums";
 
 export default class Calculator {
      numberInVisor = ""
      sequence = []
+     history = []
      result = ""
 
      constructor() {
@@ -16,24 +17,36 @@ export default class Calculator {
 
      tapOperator(operator) {
           if (!this.numberInVisor) {
-               const lastItemInSequence = this.sequence[this.sequence.length - 1]
-               if (lastItemInSequence?.type === TypeSequence.OPERATOR) {
-                    lastItemInSequence.value = operator
+               if (this.lastItemIsOperator) {
+                    this.lastItem.value = operator
                }
                return
           }
 
-          this.sequence.push({
-               type: TypeSequence.NUMBER,
-               value: Number(this.numberInVisor)
-          })
+          this.memorizeNumberInVisor()
 
           this.sequence.push({
                type: TypeSequence.OPERATOR,
                value: operator
           })
+     }
 
-          this.resetNumberInVisor()
+     get lastItem() {
+          return this.sequence[this.sequence.length - 1]
+     }
+
+     get lastItemIsOperator() {
+          return this.lastItem?.type === TypeSequence.OPERATOR
+     }
+
+     memorizeNumberInVisor() {
+          if (this.lastItemIsOperator || this.sequence.length === 0) {
+               this.sequence.push({
+                    type: TypeSequence.NUMBER,
+                    value: Number(this.numberInVisor)
+               })
+               this.resetNumberInVisor()
+          }
      }
 
      resetNumberInVisor() {
@@ -54,6 +67,22 @@ export default class Calculator {
      }
 
      calculate() {
+          if (this.numberInVisor) {
+               this.memorizeNumberInVisor()
+          } else {
+               if (this.lastItemIsOperator) {
+                    this.sequence.pop()
+               }
+          }
 
+          const result = 20
+          this.result = result
+
+          this.history.push({
+               sequence: toJS(this.sequence),
+               result: 20
+          })
+          
+          this.sequence = []          
      }
 }

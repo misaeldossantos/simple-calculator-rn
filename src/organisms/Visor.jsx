@@ -1,11 +1,10 @@
 import chroma from 'chroma-js';
 import { Observer } from 'mobx-react';
-import React, { useMemo } from 'react';
-import { Dimensions, View, StyleSheet, Text, ScrollView } from 'react-native';
-import { Colors } from 'react-native-paper';
+import React from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import VisorCurrentNumber from '../atoms/VisorCurrentNumber';
-import { MapOperatorsLabels, TypeSequence } from '../core/model/Enums';
 import AnimatedWaves from '../molecules/AnimatedWaves';
+import VisorSequence from '../molecules/VisorSequence';
 
 const DISPLAY_HEIGHT = Dimensions.get("screen").height
 
@@ -23,18 +22,7 @@ const Visor = ({ sequence, numberInVisor = "" }) => {
       }}
     >
       <Observer>
-        {() => <>
-          {sequence.map((sequence, index) => {
-            const isOperator = sequence.type === TypeSequence.OPERATOR
-            return <Text key={index} style={{
-              fontSize: 30,
-              color: isOperator ? "#B4A4E7" : Colors.grey400
-            }}>
-              {isOperator ? MapOperatorsLabels[sequence.value] : sequence.value}{" "}
-            </Text>
-          })}
-        </>
-        }
+        {() => <VisorSequence sequence={sequence} />}
       </Observer>
       <VisorCurrentNumber numberInVisor={numberInVisor} />
     </View>
