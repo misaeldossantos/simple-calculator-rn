@@ -23,3 +23,10 @@ export const MapOperatorsLabels = {
      SUM: "+",
      SUB: "-"
 }
+
+export const MapOperatorsLogic = {
+     DIV: "/",
+     MULTI: "*",
+     SUM: "+",
+     SUB: "-"
+}

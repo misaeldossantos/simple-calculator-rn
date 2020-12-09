@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import useCalculator from '../core/hooks/useCalculator';
 import { Operators, SpecialButtons } from '../core/model/Enums';
 import NumberPad from '../organisms/NumberPad';
-import Visor from '../organisms/Visor';
+import Display from '../organisms/Display';
 
 const MainPage = () => {
   const calculator = useCalculator();
@@ -27,14 +27,16 @@ const MainPage = () => {
 
   return <View style={{ flex: 1 }}>
     <Observer>
-      {() => <Visor
-        numberInVisor={calculator.numberInVisor}
+      {() => <Display
+        numberInVisor={calculator.numberInDisplay}
         sequence={calculator.sequence}
+        result={calculator.result}
       />}
     </Observer>
     <NumberPad
       press={press}
       calculate={() => calculator.calculate()}
+      longPressBackspace={() => calculator.resetNumberInVisor()}
     />
   </View>;
 }

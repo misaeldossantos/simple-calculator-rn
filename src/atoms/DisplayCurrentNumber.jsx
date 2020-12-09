@@ -5,23 +5,24 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from '
 
 const DISPLAY_WIDTH = Dimensions.get("screen").width
 
-const VisorCurrentNumber = ({ numberInVisor = ""}) => {
+const DisplayCurrentNumber = ({ color = Colors.grey, skipSplit, numberInVisor = ""}) => {
 
   const chars = useMemo(() => {
-    return numberInVisor.split("")
-  }, [numberInVisor])
+    return skipSplit? [numberInVisor]: numberInVisor.split("")
+  }, [skipSplit, numberInVisor])
 
   return <React.Fragment>
       {chars.map((char, index) => <AnimatedNumber
         char={char}
         index={index}
         length={chars.length}
+        color={color}
         key={char + "-" + index}
       />)}
     </React.Fragment>
 }
 
-function AnimatedNumber({ index, length, char }) {
+function AnimatedNumber({ index, length, char, color }) {
   const transform = useSharedValue(DISPLAY_WIDTH)
 
   useEffect(() => {
@@ -38,8 +39,8 @@ function AnimatedNumber({ index, length, char }) {
   return <Animated.Text
     key={char}
     style={[{
-      fontSize: 100, 
-      color: Colors.grey,
+      fontSize: 100,
+      color,
       fontFamily: 'quicksand-regular',
       position: 'absolute',
       right: 0,
@@ -50,4 +51,4 @@ function AnimatedNumber({ index, length, char }) {
   </Animated.Text>
 }
 
-export default React.memo(VisorCurrentNumber);
+export default React.memo(DisplayCurrentNumber);

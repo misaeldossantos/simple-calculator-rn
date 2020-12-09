@@ -5,7 +5,7 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from '
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { MapOperatorsLabels, TypeSequence } from '../core/model/Enums';
 
-const VisorSequence = ({ sequence }) => {
+const DisplaySequence = ({ sequence }) => {
      return <Observer>
           {() => <View style={{flexWrap: 'wrap', justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'flex-end'}}>
                {sequence.map((item, index) => {
@@ -71,4 +71,4 @@ function CharAnimatedText({ item, index, length }) {
      </Animated.Text>
 }
 
-export default VisorSequence;
+export default DisplaySequence;

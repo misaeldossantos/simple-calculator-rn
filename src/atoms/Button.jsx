@@ -1,11 +1,11 @@
 import chroma from 'chroma-js';
 import React, { useCallback, useMemo, useState } from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, StyleSheet, Text, Pressable, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 
-const Button = ({ as, onPress, color = "grey", rippleColor = "#B4A4E7", children }) => {
+const Button = ({ as, longPress, onPress, color = "grey", rippleColor = "#B4A4E7", children }) => {
 
     const [focus, setFocus] = useState(false)
 
@@ -39,7 +39,7 @@ const Button = ({ as, onPress, color = "grey", rippleColor = "#B4A4E7", children
 
     const size = 100
 
-    return <TouchableOpacity
+    return <Pressable
         style={{
             position: 'relative',
             flexDirection: 'row',
@@ -50,6 +50,7 @@ const Button = ({ as, onPress, color = "grey", rippleColor = "#B4A4E7", children
         }}
         delayPressIn={0}
         onPress={pressAction}
+        onLongPress={longPress}
     >
         {focus && <View style={[StyleSheet.absoluteFill, { flexDirection: 'row', justifyContent: 'center' }]}>
             <Svg height={size} width={size}>
@@ -64,7 +65,7 @@ const Button = ({ as, onPress, color = "grey", rippleColor = "#B4A4E7", children
         {typeof children === 'string' ? <Text style={{ fontFamily: 'quicksand-regular', textAlign: 'center', fontSize: 40, color: color }}>
             {children}
         </Text> : children}
-    </TouchableOpacity>
+    </Pressable>
 }
 
 function Ripple({ color, r, r2, animatedValue, opacity }) {

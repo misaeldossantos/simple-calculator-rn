@@ -2,13 +2,13 @@ import chroma from 'chroma-js';
 import { Observer } from 'mobx-react';
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import VisorCurrentNumber from '../atoms/VisorCurrentNumber';
+import DisplayCurrentNumber from '../atoms/DisplayCurrentNumber';
 import AnimatedWaves from '../molecules/AnimatedWaves';
-import VisorSequence from '../molecules/VisorSequence';
+import DisplaySequence from '../molecules/DisplaySequence';
 
 const DISPLAY_HEIGHT = Dimensions.get("screen").height
 
-const Visor = ({ sequence, numberInVisor = "" }) => {
+const Display = ({ result, sequence, numberInVisor = "" }) => {
 
   const wavesHeight = 20
 
@@ -22,9 +22,10 @@ const Visor = ({ sequence, numberInVisor = "" }) => {
       }}
     >
       <Observer>
-        {() => <VisorSequence sequence={sequence} />}
+        {() => <DisplaySequence sequence={sequence} />}
       </Observer>
-      <VisorCurrentNumber numberInVisor={numberInVisor} />
+      <DisplayCurrentNumber numberInVisor={numberInVisor} />
+      {!!result && <DisplayCurrentNumber numberInVisor={result} skipSplit color={"#B4A4E7"}/>}
     </View>
     <AnimatedWaves height={wavesHeight} />
   </View>;
@@ -42,4 +43,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Visor;
+export default Display;

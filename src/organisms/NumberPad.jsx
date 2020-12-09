@@ -6,11 +6,11 @@ import { Operators } from '../core/model/Enums';
 import AnimatedWaves from '../molecules/AnimatedWaves';
 import HeaderButtons from '../molecules/HeaderButtons';
 
-const NumberPad = ({ press, calculate }) => {
+const NumberPad = ({ press, calculate, longPressBackspace }) => {
   const operationButtonColor = "#B4A4E7"
 
   return <Grid>
-    <HeaderButtons press={press} />
+    <HeaderButtons press={press} longPressBackspace={longPressBackspace}/>
     <Row>
       <Button as={7} onPress={press}>7</Button>
       <Button as={8} onPress={press}>8</Button>
