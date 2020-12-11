@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "HelloWorld",
+    "name": "Calculator",
     "slug": "calculator",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,9 +21,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "transparent"
-      }
+        "foregroundImage": "./assets/icon.png"
+      },
+      "package": "com.misaelbdsantos.calculator"
     },
     "web": {
       "favicon": "./assets/favicon.png"
