@@ -12,6 +12,15 @@ export default class Calculator {
     }
 
     tapNumber(number) {
+        if(number === ".") {
+            if(this.numberInDisplay.includes(".")) return
+            if(!this.numberInDisplay) {
+                this.tapNumber(0)
+            }
+        }
+        if(this.result) {
+            this.result = ""
+        }
         this.numberInDisplay += number
     }
 
