@@ -33,9 +33,12 @@ I used atomic design for file architecture.
 - Expo Application in your phone or emulator
 - Npm or yarn
 
-## Install
+## Install - DEV 
 
 - Clone project
 - Run npm/yarn install
 - Run npm run start or yarn start
   
+ ## Install - RELEASE (download APK)
+ 
+ - https://github.com/misaeldossantos/simple-calculator-rn/releases
